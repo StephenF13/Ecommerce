@@ -1,3 +1,19 @@
 ecommerce_homepage:
     path:     /
-    defaults: { _controller: EcommerceBundle:Default:index }
+    defaults: { _controller: EcommerceBundle:Product:index }
+
+ecommerce_product:
+    path:     /product
+    defaults: { _controller: EcommerceBundle:Product:view }
+
+ecommerce_basket:
+    path:     /basket
+    defaults: { _controller: EcommerceBundle:Basket:view }
+
+ecommerce_delivery:
+    path:     /basket/delivery
+    defaults: { _controller: EcommerceBundle:Basket:delivery }
+
+ecommerce_validation:
+    path:     /basket/validation
+    defaults: { _controller: EcommerceBundle:Basket:validation }

@@ -1,0 +1,46 @@
+@charset "UTF-8";
+
+/** {*/
+    /*box-sizing: border-box;*/
+/*}*/
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-family: sans-serif;
+    font-size: 1.6rem;
+    color: grey;
+    line-height: 1.5;
+    padding-bottom: 40px;
+    padding-top: 60px;
+}
+
+/*.wrapper {*/
+    /*margin: 0 auto;*/
+    /*padding: 25px; !* gutter*!*/
+    /*max-width: 100%;*/
+/*}*/
+
+/*.imgResponsive {*/
+    /*max-width: 100%;*/
+    /*height: auto;*/
+/*}*/
+
+/*!*réparer le flux*!*/
+/*.repairFlux {*/
+    /*clear: both;*/
+/*}*/
+
+/*.clearfix::after {*/
+    /*content: "";*/
+    /*clear: both;*/
+    /*padding: 0;*/
+    /*margin: 0;*/
+    /*display: block;*/
+    /*line-height: 0;*/
+    /*font-size: 0;*/
+/*}*/
+
+/* ne pas oublier les auto prefix */
