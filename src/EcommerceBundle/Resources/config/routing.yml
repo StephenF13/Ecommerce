@@ -3,7 +3,7 @@ ecommerce_homepage:
     defaults: { _controller: EcommerceBundle:Product:index }
 
 ecommerce_product:
-    path:     /product
+    path:     /product/{id}
     defaults: { _controller: EcommerceBundle:Product:view }
 
 ecommerce_basket:
@@ -17,3 +17,7 @@ ecommerce_delivery:
 ecommerce_validation:
     path:     /basket/validation
     defaults: { _controller: EcommerceBundle:Basket:validation }
+
+category_products:
+    path:     /category/{category}
+    defaults: { _controller: EcommerceBundle:Product:category }

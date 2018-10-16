@@ -9,12 +9,25 @@ class ProductController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('EcommerceBundle:Product:index.html.twig');
+        $em = $this->getDoctrine()->getManager();
+        $products = $em->getRepository(Product::class)->findAll();
+
+        return $this->render('EcommerceBundle:Product:index.html.twig', ['products' => $products]);
     }
 
-    public function viewAction()
+    public function viewAction($id)
     {
-        return $this->render('EcommerceBundle:Product:view.html.twig');
+        $em = $this->getDoctrine()->getManager();
+        $product = $em->getRepository(Product::class)->find($id);
+
+        return $this->render('EcommerceBundle:Product:view.html.twig', ['product' => $product]);
     }
 
+    public function categoryAction($category)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $products = $em->getRepository(Product::class)->findBy(['category' => $category]);
+
+        return $this->render('EcommerceBundle:Product:index.html.twig', ['products' => $products]);
+    }
 }
