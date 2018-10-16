@@ -1,0 +1,11 @@
+ecommerce_basket:
+    path:     /
+    defaults: { _controller: EcommerceBundle:Basket:view }
+
+ecommerce_delivery:
+    path:     /delivery
+    defaults: { _controller: EcommerceBundle:Basket:delivery }
+
+ecommerce_validation:
+    path:     /validation
+    defaults: { _controller: EcommerceBundle:Basket:validation }

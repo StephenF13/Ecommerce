@@ -1,23 +1,7 @@
-ecommerce_homepage:
-    path:     /
-    defaults: { _controller: EcommerceBundle:Product:index }
+routingProduct:
+    resource: '@EcommerceBundle/Resources/config/routing/routingProduct.yml'
+    prefix: /
 
-ecommerce_product:
-    path:     /product/{id}
-    defaults: { _controller: EcommerceBundle:Product:view }
-
-ecommerce_basket:
-    path:     /basket
-    defaults: { _controller: EcommerceBundle:Basket:view }
-
-ecommerce_delivery:
-    path:     /basket/delivery
-    defaults: { _controller: EcommerceBundle:Basket:delivery }
-
-ecommerce_validation:
-    path:     /basket/validation
-    defaults: { _controller: EcommerceBundle:Basket:validation }
-
-category_products:
-    path:     /category/{category}
-    defaults: { _controller: EcommerceBundle:Product:category }
+routingBasket:
+    resource: '@EcommerceBundle/Resources/config/routing/routingBasket.yml'
+    prefix: /basket

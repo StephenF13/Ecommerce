@@ -26,10 +26,7 @@
             </button>
             <a class="brand" href="{{ path('ecommerce_homepage') }}">Ecommerce</a>
             <div class="nav-collapse collapse">
-                <form class="navbar-form form-search pull-right">
-                    <input id="Search" name="Search" type="text" class="input-medium search-query">
-                    <button type="submit" class="btn">Rechercher</button>
-                </form>
+                {{ render(controller('EcommerceBundle:Product:search')) }}
             </div>
         </div>
     </div>
@@ -54,8 +51,8 @@
 
             <div class="span2">
                 <h4>Nous contacter</h4>
-                <p><i class="icon-phone"></i>&nbsp;Tel: 02 35 00 00 00</p>
-                <p><i class="icon-print"></i>&nbsp;Fax: 02 35 00 00 00</p>
+                <p><i class="icon-phone"></i>&nbsp;Tel: {{ tel }}</p>
+                <p><i class="icon-print"></i>&nbsp;Fax: {{ fax  }}</p>
             </div>
         </div>
 

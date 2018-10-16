@@ -38,6 +38,9 @@ framework:
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+    globals:
+        tel: 02 35 00 00 00
+        fax: 02 35 00 00 00
 
 # Doctrine Configuration
 doctrine:

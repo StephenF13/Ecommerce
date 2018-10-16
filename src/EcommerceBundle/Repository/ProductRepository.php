@@ -10,4 +10,16 @@ namespace EcommerceBundle\Repository;
  */
 class ProductRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function search($string)
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->select('p')
+            ->where('p.name like :string')
+            ->andWhere('p.available = 1')
+            ->orderBy('p.id')
+            ->setParameter('string', '%'.$string.'%');
+
+        return $qb->getQuery()->getResult();
+
+    }
 }

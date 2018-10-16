@@ -1,0 +1,15 @@
+ecommerce_homepage:
+    path:     /
+    defaults: { _controller: EcommerceBundle:Product:index }
+
+ecommerce_product:
+    path:     /product/{id}
+    defaults: { _controller: EcommerceBundle:Product:view }
+
+category_products:
+    path:     /category/{category}
+    defaults: { _controller: EcommerceBundle:Product:category }
+
+search_product:
+    path:     /search
+    defaults: { _controller: EcommerceBundle:Product:searchResult }
