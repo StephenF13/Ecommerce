@@ -1,8 +1,15 @@
 {% extends "EcommerceBundle::layout.html.twig" %}
+{% block title %} {{ product.name }} {% endblock %}
+{% block metaDescription %} {{ product.description }}{% endblock %}
+
 {% block body %}
     <div class="container">
         <div class="row">
-            {% include  "EcommerceBundle::col-left.html.twig" %}
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                {% include  "EcommerceBundle::col-left-co.html.twig" %}
+            {% else %}
+                {% include  "EcommerceBundle::col-left.html.twig" %}
+            {% endif %}
             <div class="span9">
                 <div class="row">
                     <div class="span5">
@@ -13,7 +20,7 @@
                         <h4>{{ product.name }}</h4>
                         <h5>{{ product.category.name|capitalize }}</h5>
                         <p>{{ product.description|nl2br }}</p>
-                        <h4>{{ product.price }}€</h4>
+                        <h4>{{ product.price|taxe(product.taxe.rate) }}€</h4>
                         <form action="{{ path('ecommerce_basket') }}">
 
 

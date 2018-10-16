@@ -1,4 +1,5 @@
 services:
-#    ecommerce.example:
-#        class: EcommerceBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]# Fixtures services
+    taxe:
+      class: EcommerceBundle\Twig\Extensions\TaxeExtension
+      tags:
+        - { name: twig.extension }

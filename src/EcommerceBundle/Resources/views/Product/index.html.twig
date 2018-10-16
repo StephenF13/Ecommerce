@@ -2,7 +2,11 @@
 {% block body %}
     <div class="container">
         <div class="row">
-            {% include  "EcommerceBundle::col-left.html.twig" %}
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                {% include  "EcommerceBundle::col-left-co.html.twig" %}
+            {% else %}
+                {% include  "EcommerceBundle::col-left.html.twig" %}
+            {% endif %}
             <div class="span9">
                 {% if products|length != 0 %}
                     <ul class="thumbnails">
@@ -13,7 +17,7 @@
                                          height="300">
                                     <div class="caption">
                                         <h4>{{ product.name }}</h4>
-                                        <p>{{ product.price }} €</p>
+                                        <p>{{ product.price|taxe(product.taxe.rate) }} €</p>
                                         <a class="btn btn-primary"
                                            href="{{ path('ecommerce_product', {'id' : product.id}) }}">Plus d'infos</a>
                                         <a class="btn btn-success" href="{{ path('ecommerce_basket') }}">Ajouter au
