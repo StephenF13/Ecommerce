@@ -20,8 +20,11 @@
                                         <p>{{ product.price|taxe(product.taxe.rate) }} €</p>
                                         <a class="btn btn-primary"
                                            href="{{ path('ecommerce_product', {'id' : product.id}) }}">Plus d'infos</a>
-                                        <a class="btn btn-success" href="{{ path('ecommerce_basket') }}">Ajouter au
-                                            panier</a>
+                                        {% if basket[product.id] is not defined %}
+                                            <a class="btn btn-success"
+                                               href="{{ path('add_basket', {'id' : product.id}) }}">Ajouter au
+                                                panier</a>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </li>

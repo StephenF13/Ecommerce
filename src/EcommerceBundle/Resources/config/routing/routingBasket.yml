@@ -2,6 +2,14 @@ ecommerce_basket:
     path:     /
     defaults: { _controller: EcommerceBundle:Basket:view }
 
+add_basket:
+    path:     /add/{id}
+    defaults: { _controller: EcommerceBundle:Basket:add }
+
+delete_basket:
+    path:     /delete/{id}
+    defaults: { _controller: EcommerceBundle:Basket:delete }
+
 ecommerce_delivery:
     path:     /delivery
     defaults: { _controller: EcommerceBundle:Basket:delivery }

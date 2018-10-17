@@ -20,7 +20,7 @@ class ProductFixtures extends AbstractFixture implements OrderedFixtureInterface
         $produit1->setImage($this->getReference('media3'));
         $produit1->setName('Poivron rouge');
         $produit1->setPrice('1.99');
-        $produit1->setTaxe($this->getReference('tva2'));
+        $produit1->setTaxe($this->getReference('tva1'));
         $manager->persist($produit1);
 
         $produit2 = new Product();

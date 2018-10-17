@@ -21,18 +21,22 @@
                         <h5>{{ product.category.name|capitalize }}</h5>
                         <p>{{ product.description|nl2br }}</p>
                         <h4>{{ product.price|taxe(product.taxe.rate) }}€</h4>
-                        <form action="{{ path('ecommerce_basket') }}">
-
-
-                            <select name="qte" class="span1">
-                                <option>1</option>
-                            </select>
-
+                        {% if basket[product.id] is not defined %}
+                            <form action="{{ path('add_basket', {'id' : product.id}) }}" method="GET">
+                                <select name="qte" class="span1">
+                                    {% for i in 1..10 %}
+                                        <option value="{{ i }}">{{ i }}</option>
+                                    {% endfor %}
+                                </select>
+                                <div>
+                                    <button class="btn btn-primary">Ajouter au panier</button>
+                                </div>
+                            </form>
+                        {% else %}
                             <div>
-                                <button class="btn btn-primary">Ajouter au panier</button>
+                                <a href="{{ path('ecommerce_basket') }}">Le produit est déjà au panier</a>
                             </div>
-                        </form>
-
+                        {% endif %}
                     </div>
                 </div>
 

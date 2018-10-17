@@ -10,16 +10,29 @@ use EcommerceBundle\Repository\ProductRepository;
 
 class ProductController extends Controller
 {
-    public function indexAction()
+    public function indexAction(Request $request)
     {
+        $session = $request->getSession();
+
         $em = $this->getDoctrine()->getManager();
         $products = $em->getRepository(Product::class)->findBy(['available' => 1]);
 
-        return $this->render('EcommerceBundle:Product:index.html.twig', ['products' => $products]);
+        if ($session->has('basket')) {
+            $basket = $session->get('basket');
+        } else {
+            $basket = false;
+        }
+
+
+        return $this->render('EcommerceBundle:Product:index.html.twig', ['products' => $products, 'basket' => $basket]);
     }
 
-    public function viewAction($id)
+    public function viewAction($id, Request $request)
     {
+
+        $session = $request->getSession();
+
+
         $em = $this->getDoctrine()->getManager();
         $product = $em->getRepository(Product::class)->find($id);
 
@@ -27,7 +40,13 @@ class ProductController extends Controller
             throw $this->createNotFoundException('La page n\'existe pas.');
         }
 
-        return $this->render('EcommerceBundle:Product:view.html.twig', ['product' => $product]);
+        if ($session->has('basket')) {
+            $basket = $session->get('basket');
+        } else {
+            $basket = false;
+        }
+
+        return $this->render('EcommerceBundle:Product:view.html.twig', ['product' => $product, 'basket' => $basket]);
     }
 
     public function categoryAction($category)

@@ -1,0 +1,11 @@
+<div class="well">
+    <a href="{{ path('ecommerce_basket') }}">
+        {% if article == 0 %}
+            Aucun article dans votre panier
+        {% elseif article == 1 %}
+        Il y a {{ article }} article dans votre panier
+        {% else %}
+            Il y a  {{ article }} articles dans votre panier
+        {% endif %}
+    </a>
+</div>
