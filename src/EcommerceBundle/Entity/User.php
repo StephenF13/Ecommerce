@@ -28,17 +28,56 @@ class User extends BaseUser
         // your own logic
     }
 
-    /*
+    /**
      *
      * @ORM\OneToMany(targetEntity="EcommerceBundle\Entity\Orders", mappedBy="user", cascade={"remove"})
      * @ORM\JoinColumn(nullable=true)
      */
     private $orders;
 
-    /*
+    /**
     *
     * @ORM\OneToMany(targetEntity="EcommerceBundle\Entity\UserAddress", mappedBy="user", cascade={"remove"})
     * @ORM\JoinColumn(nullable=true)
     */
     private $address;
+
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function addOrders(Orders $orders)
+    {
+        $this->orders[] = $orders;
+        return $this;
+    }
+
+
+    public function removeOrder(Orders $orders)
+    {
+        $this->orders->removeElement($orders);
+    }
+
+    public function getOrders()
+    {
+        return $this->orders;
+    }
+
+    public function addAddress(UserAddress $address)
+    {
+        $this->address[] = $address;
+        return $this;
+    }
+
+    public function removeAddress(UserAddress $address)
+    {
+        $this->address->removeElement($address);
+    }
+
+    public function getAddress()
+    {
+        return $this->address;
+    }
 }

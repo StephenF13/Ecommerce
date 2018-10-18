@@ -3,3 +3,11 @@ services:
       class: EcommerceBundle\Twig\Extensions\TaxeExtension
       tags:
         - { name: twig.extension }
+
+
+    redirectListener:
+      class: EcommerceBundle\Listener\RedirectListener
+      arguments:  ["@service_container", "@session"]
+      tags:
+        - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+

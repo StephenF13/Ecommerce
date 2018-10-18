@@ -17,3 +17,7 @@ ecommerce_delivery:
 ecommerce_validation:
     path:     /validation
     defaults: { _controller: EcommerceBundle:Basket:validation }
+
+delete_address:
+    path:     /delivery/address/delete/{id}
+    defaults: { _controller: EcommerceBundle:Basket:deleteAddress }

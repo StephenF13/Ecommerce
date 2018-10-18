@@ -7,15 +7,21 @@ use EcommerceBundle\Entity\Product;
 use EcommerceBundle\Form\SearchType;
 use Symfony\Component\HttpFoundation\Request;
 use EcommerceBundle\Repository\ProductRepository;
+use EcommerceBundle\Entity\Category;
+use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter;
 
 class ProductController extends Controller
 {
-    public function indexAction(Request $request)
+    public function indexAction(Request $request, Category $category = null)
     {
         $session = $request->getSession();
-
         $em = $this->getDoctrine()->getManager();
-        $products = $em->getRepository(Product::class)->findBy(['available' => 1]);
+
+        if ($category != null) {
+            $products = $em->getRepository(Product::class)->findBy(['category' => $category, 'available' => 1]);
+        } else {
+            $products = $em->getRepository(Product::class)->findBy(['available' => 1]);
+        }
 
         if ($session->has('basket')) {
             $basket = $session->get('basket');
@@ -29,9 +35,7 @@ class ProductController extends Controller
 
     public function viewAction($id, Request $request)
     {
-
         $session = $request->getSession();
-
 
         $em = $this->getDoctrine()->getManager();
         $product = $em->getRepository(Product::class)->find($id);
@@ -47,14 +51,6 @@ class ProductController extends Controller
         }
 
         return $this->render('EcommerceBundle:Product:view.html.twig', ['product' => $product, 'basket' => $basket]);
-    }
-
-    public function categoryAction($category)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $products = $em->getRepository(Product::class)->findBy(['category' => $category, 'available' => 1]);
-
-        return $this->render('EcommerceBundle:Product:index.html.twig', ['products' => $products]);
     }
 
     public function searchAction()

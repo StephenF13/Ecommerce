@@ -8,7 +8,7 @@ ecommerce_product:
 
 category_products:
     path:     /category/{category}
-    defaults: { _controller: EcommerceBundle:Product:category }
+    defaults: { _controller: EcommerceBundle:Product:index }
 
 search_product:
     path:     /search

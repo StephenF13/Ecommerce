@@ -3,6 +3,8 @@
 namespace EcommerceBundle\Controller;
 
 use EcommerceBundle\Entity\Product;
+use EcommerceBundle\Entity\UserAddress;
+use EcommerceBundle\Form\UserAddressType;
 use EcommerceBundle\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -53,9 +55,41 @@ class BasketController extends Controller
         return $this->redirect($this->generateUrl('ecommerce_basket'));
     }
 
-    public function deliveryAction()
+    public function deleteAddressAction($id)
     {
-        return $this->render('EcommerceBundle:Basket:delivery.html.twig');
+        $em = $this->getDoctrine()->getManager();
+        $address = $em->getRepository(UserAddress::class)->find($id);
+
+        if ($this->get('security.token_storage')->getToken()->getUser() != $address->getUser() || !$address) {
+            return $this->redirect($this->generateUrl('ecommerce_delivery'));
+        }
+
+        $em->remove($address);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('ecommerce_delivery'));
+    }
+
+    public function deliveryAction(Request $request)
+    {
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $userAddress = new UserAddress();
+        $form = $this->createForm(UserAddressType::class, $userAddress);
+
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $userAddress->setUser($user);
+                $em->persist($userAddress);
+                $em->flush();
+
+                return $this->redirect($this->generateUrl('ecommerce_delivery'));
+            }
+        }
+
+        return $this->render('EcommerceBundle:Basket:delivery.html.twig',
+            ['form' => $form->createView(), 'user' => $user]);
     }
 
     public function menuAction(Request $request)
