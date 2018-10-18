@@ -8,16 +8,18 @@
                 <div class="accordion-inner">
                     <div class="span4">
                         {% if user.address|length != 0 %}
-                            <form action="{{ path('ecommerce_validation') }}">
+                            <form action="{{ path('ecommerce_validation') }}" method="post">
                                 <h4>Adresse de livraison</h4>
                                 {% for address in user.address %}
                                     <label class="radio">
-                                        <input type="radio" name="delivery" id="optionsRadios1"
+                                        <input type="radio" name="delivery"
                                                value="{{ address.id }}"
                                                {% if loop.index0 == 0 %}checked="checked"{% endif %}>
                                         {{ address.firstname }} {{ address.name }} <br/>
                                         {{ address.address }}, {{ address.postcode }}  {{ address.city }}
-                                        - {{ address.country }} <a href="{{ path('delete_address', {'id' : address.id}) }}"><i class="icon-trash"></i></a>
+                                        - {{ address.country }} <a
+                                                href="{{ path('delete_address', {'id' : address.id}) }}"><i
+                                                    class="icon-trash"></i></a>
                                     </label>
                                 {% endfor %}
 
@@ -27,12 +29,14 @@
                                 <h4>Adresse de facturation</h4>
                                 {% for address in user.address %}
                                     <label class="radio">
-                                        <input type="radio" name="billing" id="billing"
+                                        <input type="radio" name="billing"
                                                value="{{ address.id }}"
                                                {% if loop.index0 == 0 %}checked="checked"{% endif %}>
                                         {{ address.firstname }} {{ address.name }} <br/>
                                         {{ address.address }}, {{ address.postcode }}  {{ address.city }}
-                                        - {{ address.country }} <a href="{{ path('delete_address', {'id' : address.id}) }}"><i class="icon-trash"></i></a>
+                                        - {{ address.country }} <a
+                                                href="{{ path('delete_address', {'id' : address.id}) }}"><i
+                                                    class="icon-trash"></i></a>
                                     </label>
                                 {% endfor %}
                                 <br/>

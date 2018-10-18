@@ -106,9 +106,49 @@ class BasketController extends Controller
 
     }
 
-    public function validationAction()
+    public function setDeliveryOnSession(Request $request)
     {
-        return $this->render('EcommerceBundle:Basket:validation.html.twig');
+        $session = $request->getSession();
+
+        if (!$session->has('address')) {
+            $session->set('address', []);
+        }
+
+        $address = $session->get('address');
+
+        if ($request->get('delivery') != null && $request->get('billing') != null) {
+            $address['delivery'] = $request->get('delivery');
+            $address['billing'] = $request->get('billing');
+        } else {
+            return $this->redirect($this->generateUrl('ecommerce_validation'));
+        }
+
+        $session->set('address', $address);
+
+        return $this->redirect($this->generateUrl('ecommerce_validation'));
+    }
+
+    public function validationAction(Request $request)
+    {
+        if ($request->isMethod('POST')) {
+            $this->setDeliveryOnSession($request);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $session = $request->getSession();
+        $address = $session->get('address');
+        $products = $em->getRepository(Product::class)->findBy(['id' => array_keys($session->get('basket'))]);
+        $delivery = $em->getRepository(UserAddress::class)->find($address['delivery']);
+        $billing = $em->getRepository(UserAddress::class)->find($address['billing']);
+
+
+        return $this->render('EcommerceBundle:Basket:validation.html.twig',
+            [
+                'products' => $products,
+                'basket'   => $session->get('basket'),
+                'delivery' => $delivery,
+                'billing'  => $billing,
+            ]);
     }
 
     public function viewAction(Request $request)

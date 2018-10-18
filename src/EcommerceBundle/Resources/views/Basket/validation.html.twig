@@ -1,55 +1,76 @@
 {% extends "EcommerceBundle::layout.html.twig" %}
+
+{% set totalHT = 0 %}
+{% set totalTTC = 0 %}
+{% set totalTaxe = 0 %}
+
+
 {% block body %}
-<div class="container">
-    <div class="row">
-        {% include  "EcommerceBundle::col-left.html.twig" %}
-        <div class="span9">
-            <h2>Valider mon panier</h2>
-            <form>
-                <table class="table table-striped table-hover">
-                    <thead>
-                    <tr>
-                        <th>Références</th>
-                        <th>Quantité</th>
-                        <th>Prix unitaire</th>
-                        <th>Total HT</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>AB29837</td>
-                        <td>
-                            2
-                        </td>
-                        <td>333,33€</td>
-                        <td>333,33€</td>
-                    </tr>
-                    <tr>
-                        <td>AC34423</td>
-                        <td>
-                            1
-                        </td>
-                        <td>333,33€</td>
-                        <td>666,66€</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </form>
+    <div class="container">
+        <div class="row">
+            {% include  "EcommerceBundle::col-left.html.twig" %}
+            <div class="span9">
+                <h2>Valider mon panier</h2>
+                <form>
+                    <table class="table table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th>Références</th>
+                            <th>Quantité</th>
+                            <th>Prix unitaire</th>
+                            <th>Total HT</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for product in products %}
 
-            <dl class="dl-horizontal pull-right">
-                <dt>Total HT :</dt>
-                <dd>799,99€</dd>
+                            <tr>
+                                <td>{{ product.name }}</td>
+                                <td> {{ basket[product.id] }}</td>
+                                <td> {{ product.price }} €</td>
+                                <td> {{ product.price * basket[product.id] }} €</td>
+                            </tr>
+                            {% set totalHT = totalHT + (product.price * basket[product.id]) %}
+                            {% set totalTTC = totalTTC + (product.price * basket[product.id])|taxe(product.taxe.rate) %}
 
-                <dt>TVA :</dt>
-                <dd>200€</dd>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </form>
 
-                <dt>Total:</dt>
-                <dd>999,99€ TTC</dd>
-            </dl>
-            <div class="clearfix"></div>
-            <a href="#" class="btn btn-success pull-right">Payer</a>
+                {% set totalTaxe = totalTTC - totalHT %}
+
+                <dl class="dl-horizontal pull-right">
+                    <dt>Total HT :</dt>
+                    <dd>{{ totalHT }} €</dd>
+
+                    <dt>TVA :</dt>
+                    <dd>{{ totalTaxe }} €</dd>
+
+                    <dt>Total TTC:</dt>
+                    <dd>{{ totalTTC }} €</dd>
+                </dl>
+                <div class="span3 pull-left">
+                    <dl class="pull-left">
+                        <dt><h4>Adresse de livraison</h4></dt>
+                        <dt>{{ delivery.firstname }} {{ delivery.name }}</dt>
+                        <dt>{{ delivery.address }} </dt>
+                        <dt>{{ delivery.postcode }} {{ delivery.city }} - {{ delivery.country }}</dt>
+                    </dl>
+                </div>
+                <div class="span3 pull-left">
+                    <dl class="pull-left">
+                        <dt><h4>Adresse de facturation</h4></dt>
+                        <dt>{{ billing.firstname }} {{ billing.name }}</dt>
+                        <dt>{{ billing.address }} </dt>
+                        <dt>{{ billing.postcode }} {{ billing.city }} - {{ billing.country }}</dt>
+                    </dl>
+                </div>
+                <div class="clearfix"></div>
+                <a href="#" class="btn btn-success pull-right">Payer</a>
+                <a href="{{ path('ecommerce_delivery') }}" class="btn btn-primary">Retour</a>
+            </div>
+
         </div>
-
     </div>
-</div>
 {% endblock %}
