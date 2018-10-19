@@ -1,10 +1,5 @@
 {% extends "EcommerceBundle::layout.html.twig" %}
 
-{% set totalHT = 0 %}
-{% set totalTTC = 0 %}
-{% set totalTaxe = 0 %}
-
-
 {% block body %}
     <div class="container">
         <div class="row">
@@ -22,52 +17,59 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% for product in products %}
+                        {% for product in orders.product.product %}
 
                             <tr>
-                                <td>{{ product.name }}</td>
-                                <td> {{ basket[product.id] }}</td>
-                                <td> {{ product.price }} €</td>
-                                <td> {{ product.price * basket[product.id] }} €</td>
+                                <td>{{ product.reference }}</td>
+                                <td> {{ product.quantity }}</td>
+                                <td> {{ product.priceHT }} €</td>
+                                <td> {{ product.priceHT * product.quantity }} €</td>
                             </tr>
-                            {% set totalHT = totalHT + (product.price * basket[product.id]) %}
-                            {% set totalTTC = totalTTC + (product.price * basket[product.id])|taxe(product.taxe.rate) %}
 
                         {% endfor %}
                         </tbody>
                     </table>
                 </form>
-
-                {% set totalTaxe = totalTTC - totalHT %}
-
                 <dl class="dl-horizontal pull-right">
                     <dt>Total HT :</dt>
-                    <dd>{{ totalHT }} €</dd>
+                    <dd>{{ orders.product.priceHT }} €</dd>
 
-                    <dt>TVA :</dt>
-                    <dd>{{ totalTaxe }} €</dd>
+
+                    {% for key, taxe in orders.product.taxe %}
+                        <dt>TVA {{ key }} :</dt>
+                        <dd>{{ taxe }} €</dd>
+                    {% endfor %}
 
                     <dt>Total TTC:</dt>
-                    <dd>{{ totalTTC }} €</dd>
+                    <dd>{{ orders.product.priceTTC }} €</dd>
                 </dl>
                 <div class="span3 pull-left">
                     <dl class="pull-left">
                         <dt><h4>Adresse de livraison</h4></dt>
-                        <dt>{{ delivery.firstname }} {{ delivery.name }}</dt>
-                        <dt>{{ delivery.address }} </dt>
-                        <dt>{{ delivery.postcode }} {{ delivery.city }} - {{ delivery.country }}</dt>
+                        <dt>{{ orders.product.delivery.firstname }} {{ orders.product.delivery.name }}</dt>
+                        <dt>{{ orders.product.delivery.address }}</dt>
+                        <dt>{{ orders.product.delivery.postcode }} {{ orders.product.delivery.city }}
+                            - {{ orders.product.delivery.country }}</dt>
                     </dl>
                 </div>
                 <div class="span3 pull-left">
                     <dl class="pull-left">
                         <dt><h4>Adresse de facturation</h4></dt>
-                        <dt>{{ billing.firstname }} {{ billing.name }}</dt>
-                        <dt>{{ billing.address }} </dt>
-                        <dt>{{ billing.postcode }} {{ billing.city }} - {{ billing.country }}</dt>
+                        <dt>{{ orders.product.billing.firstname }} {{ orders.product.billing.name }}</dt>
+                        <dt>{{ orders.product.billing.address }}</dt>
+                        <dt>{{ orders.product.billing.postcode }} {{ orders.product.billing.city }}
+                            - {{ orders.product.billing.country }}</dt>
                     </dl>
                 </div>
                 <div class="clearfix"></div>
-                <a href="#" class="btn btn-success pull-right">Payer</a>
+                {#exemple pour API de paiement, rajouter ce qu'on a besoin de lui envoyer #}
+                <form action="{{ path('validation_order', { 'id' : orders.id }) }}" method="POST">
+                    <input name="token" type="hidden" value="{{ orders.product.token }}">
+                    <input name="price" type="hidden" value="{{ orders.product.priceTTC }}">
+                    <input name="date" type="hidden" value="{{ orders.date|date('dmyhms') }}">
+                    <button type="submit" class="btn btn-success pull-right">Payer</button>
+                </form>
+
                 <a href="{{ path('ecommerce_delivery') }}" class="btn btn-primary">Retour</a>
             </div>
 

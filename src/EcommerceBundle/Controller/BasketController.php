@@ -2,6 +2,7 @@
 
 namespace EcommerceBundle\Controller;
 
+use EcommerceBundle\Entity\Orders;
 use EcommerceBundle\Entity\Product;
 use EcommerceBundle\Entity\UserAddress;
 use EcommerceBundle\Form\UserAddressType;
@@ -135,19 +136,11 @@ class BasketController extends Controller
         }
 
         $em = $this->getDoctrine()->getManager();
-        $session = $request->getSession();
-        $address = $session->get('address');
-        $products = $em->getRepository(Product::class)->findBy(['id' => array_keys($session->get('basket'))]);
-        $delivery = $em->getRepository(UserAddress::class)->find($address['delivery']);
-        $billing = $em->getRepository(UserAddress::class)->find($address['billing']);
-
-
+        $preOrder = $this->forward('EcommerceBundle:Order:preOrder');
+        $orders = $em->getRepository(Orders::class)->find($preOrder->getContent());
         return $this->render('EcommerceBundle:Basket:validation.html.twig',
             [
-                'products' => $products,
-                'basket'   => $session->get('basket'),
-                'delivery' => $delivery,
-                'billing'  => $billing,
+                'orders' => $orders,
             ]);
     }
 
