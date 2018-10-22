@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use EcommerceBundle\Services\GetReference;
 
 class OrderController extends Controller
 {
@@ -116,7 +117,7 @@ class OrderController extends Controller
         }
 
         $orders->setStatus(1);
-        $orders->setOrderNumber(1);    //Service
+        $orders->setOrderNumber($this->get('setNewReference')->reference());    //Service
         $em->flush();
 
         $session = $request->getSession();
@@ -125,6 +126,6 @@ class OrderController extends Controller
         $session->remove('orders');
 
         $this->get('session')->getFlashBag()->add('success','Votre commande est validée avec succès');
-        return $this->redirect($this->generateUrl('ecommerce_homepage'));
+        return $this->redirect($this->generateUrl('bill'));
     }
 }

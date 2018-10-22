@@ -1,3 +1,12 @@
 validation_order:
     path:     /API/banque/{id}
     defaults: { _controller: EcommerceBundle:Order:validationOrder }
+
+bill:
+    path:     /user/bill
+    defaults: { _controller: EcommerceBundle:User:bill }
+
+billPdf:
+    path:     /user/bill/pdf/{id}
+    defaults: { _controller: EcommerceBundle:User:billPdf }
+
