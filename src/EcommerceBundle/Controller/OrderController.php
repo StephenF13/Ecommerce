@@ -25,7 +25,7 @@ class OrderController extends Controller
         $basket = $session->get('basket');
         $orders = [];
         $totalHT = 0;
-        $totalTTC = 0;
+        $totalTaxe = 0;
 
         $billing = $em->getRepository(UserAddress::class)->find($address['billing']);
         $delivery = $em->getRepository(UserAddress::class)->find($address['delivery']);
@@ -35,13 +35,17 @@ class OrderController extends Controller
             $priceHT = ($product->getPrice() * $basket[$product->getId()]);
             $priceTTC = ($product->getPrice() * $basket[$product->getId()] / $product->getTaxe()->getRate());
             $totalHT += $priceHT;
-            $totalTTC += $priceTTC;
+
 
             if (!isset($orders['taxe']['%' . $product->getTaxe()->getValue()])) {
                 $orders['taxe']['%' . $product->getTaxe()->getValue()] = round($priceTTC - $priceHT, 2);
+
             } else {
                 $orders['taxe']['%' . $product->getTaxe()->getValue()] += round($priceTTC - $priceHT, 2);
+
             }
+
+            $totalTaxe += round($priceTTC - $priceHT, 2);
 
             $orders['product'][$product->getId()] = [
                 'reference' => $product->getName(),
@@ -72,7 +76,7 @@ class OrderController extends Controller
             'complement' => $billing->getComplement(),
         ];
         $orders['priceHT'] = round($totalHT, 2);
-        $orders['priceTTC'] = round($totalTTC, 2);
+        $orders['priceTTC'] = round($totalHT + $totalTaxe, 2);
         $orders['token'] = bin2hex(random_bytes(20));
 
         return $orders;
@@ -125,7 +129,7 @@ class OrderController extends Controller
         $session->remove('basket');
         $session->remove('orders');
 
-        $this->get('session')->getFlashBag()->add('success','Votre commande est validée avec succès');
+        $this->get('session')->getFlashBag()->add('success', 'Votre commande est validée avec succès');
         return $this->redirect($this->generateUrl('bill'));
     }
 }

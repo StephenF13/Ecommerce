@@ -18,9 +18,9 @@ class ProductController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         if ($category != null) {
-            $products = $em->getRepository(Product::class)->findBy(['category' => $category, 'available' => 1]);
+            $productsQuery = $em->getRepository(Product::class)->findBy(['category' => $category, 'available' => 1]);
         } else {
-            $products = $em->getRepository(Product::class)->findBy(['available' => 1]);
+            $productsQuery = $em->getRepository(Product::class)->findBy(['available' => 1]);
         }
 
         if ($session->has('basket')) {
@@ -29,8 +29,16 @@ class ProductController extends Controller
             $basket = false;
         }
 
+        $paginator = $this->get('knp_paginator');
+        $products = $paginator->paginate(
+            $productsQuery, /* query NOT result */
+            $request->query->getInt('page', 1) /*page number*/,
+            2/*limit per page*/
+        );
 
-        return $this->render('EcommerceBundle:Product:index.html.twig', ['products' => $products, 'basket' => $basket]);
+
+        return $this->render('EcommerceBundle:Product:index.html.twig',
+            ['basket' => $basket, 'products' => $products]);
     }
 
     public function viewAction($id, Request $request)
