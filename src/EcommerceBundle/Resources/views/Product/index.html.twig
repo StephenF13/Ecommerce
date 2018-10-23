@@ -13,7 +13,7 @@
                         {% for product in products %}
                             <li class="span3">
                                 <div class="thumbnail">
-                                    <img src="{{ product.image.path }}" alt="{{ product.image.alt }}" width="300"
+                                    <img src="{{ asset(product.image.webPath) }}" alt="{{ product.image.alt }}" width="300"
                                          height="300">
                                     <div class="caption">
                                         <h4>{{ product.name }}</h4>

@@ -20,14 +20,8 @@
                 <td>{{ product.price }}</td>
                 <td>{% if product.available %}Yes{% else %}No{% endif %}</td>
                 <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('adminProduct_show', { 'id': product.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('adminProduct_edit', { 'id': product.id }) }}">edit</a>
-                        </li>
-                    </ul>
+                    <a href="{{ path('adminProduct_show', { 'id': product.id }) }}"><i class="fas fa-book"></i></a>
+                    <a href="{{ path('adminProduct_edit', { 'id': product.id }) }}"><i class="far fa-edit"></i></a>
                 </td>
             </tr>
         {% endfor %}
