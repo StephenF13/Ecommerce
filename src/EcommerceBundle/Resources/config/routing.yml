@@ -9,3 +9,7 @@ routingBasket:
 routingOrder:
     resource: '@EcommerceBundle/Resources/config/routing/routingOrder.yml'
     prefix: /order
+
+routingProductAdmin:
+    resource: '@EcommerceBundle/Resources/config/routing/routingProductAdmin.yml'
+    prefix: /admin/product

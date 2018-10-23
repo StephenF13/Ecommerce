@@ -1,0 +1,42 @@
+{% extends 'EcommerceBundle:Admin:layoutAdmin.html.twig' %}
+{% block body %}
+    <h1>Products list</h1>
+
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Available</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for product in products %}
+            <tr>
+
+                <td>{{ product.name }}</td>
+
+                <td>{{ product.price }}</td>
+                <td>{% if product.available %}Yes{% else %}No{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('adminProduct_show', { 'id': product.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('adminProduct_edit', { 'id': product.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('adminProduct_new') }}">Create a new product</a>
+        </li>
+    </ul>
+{% endblock %}

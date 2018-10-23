@@ -53,7 +53,7 @@ class Product
      * @var string
      *
      *
-     * @ORM\ManyToOne(targetEntity="EcommerceBundle\Entity\Category", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="EcommerceBundle\Entity\Category", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $category;
@@ -72,7 +72,7 @@ class Product
      * @var float
      *
      *
-     * @ORM\ManyToOne(targetEntity="EcommerceBundle\Entity\Taxe", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="EcommerceBundle\Entity\Taxe", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $taxe;

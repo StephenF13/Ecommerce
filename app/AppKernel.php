@@ -19,6 +19,7 @@ class AppKernel extends Kernel
             new EcommerceBundle\EcommerceBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+            new FOS\CKEditorBundle\FOSCKEditorBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
