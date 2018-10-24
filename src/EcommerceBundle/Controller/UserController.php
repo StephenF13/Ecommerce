@@ -34,21 +34,7 @@ class UserController extends Controller
             return $this->redirect($this->generateUrl('bill'));
         }
 
-        $html = $this->renderView('EcommerceBundle:User:billPdf.html.twig', array('bill' => $bill));
-
-        $html2pdf = new Html2Pdf('P','A4','fr');
-        $html2pdf->pdf->SetAuthor('Demo');
-        $html2pdf->pdf->SetTitle('Facture ' .$bill->getOrderNumber());
-        $html2pdf->pdf->SetSubject('Facture Demo');
-        $html2pdf->pdf->SetKeywords('facture, demo');
-        $html2pdf->pdf->SetDisplayMode('real');
-        $html2pdf->writeHTML($html);
-        $html2pdf->output('Invoice.pdf');
-
-        $response = new Response();
-        $response->headers->set('Content-type' , 'application/pdf');
-
-        return $response;
+        $this->get('setNewBill')->bill($bill);
 
     }
 

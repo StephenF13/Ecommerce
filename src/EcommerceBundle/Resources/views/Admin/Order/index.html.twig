@@ -1,0 +1,29 @@
+{% extends 'EcommerceBundle:Admin:layoutAdmin.html.twig' %}
+
+{% block body %}
+    <h1>Orders list</h1>
+
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th>N°</th>
+            <th>Date</th>
+            <th>Client</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for order in orders %}
+            <tr>
+                <td>{{ order.orderNumber }}</td>
+                <td>{{ order.date|date('d-m-Y') }}</td>
+                <td>{{ order.user.username|capitalize  }} </td>
+                <td>
+                    <a href="{{ path('adminOrder_show', { 'id': order.id }) }}"><i class="fas fa-book"></i></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

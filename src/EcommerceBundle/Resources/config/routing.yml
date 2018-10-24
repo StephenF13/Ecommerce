@@ -13,3 +13,11 @@ routingOrder:
 routingProductAdmin:
     resource: '@EcommerceBundle/Resources/config/routing/routingProductAdmin.yml'
     prefix: /admin/product
+
+routingCategoryAdmin:
+    resource: '@EcommerceBundle/Resources/config/routing/routingCategoryAdmin.yml'
+    prefix: /admin/category
+
+routingOrderAdmin:
+    resource: '@EcommerceBundle/Resources/config/routing/routingOrderAdmin.yml'
+    prefix: /admin/order

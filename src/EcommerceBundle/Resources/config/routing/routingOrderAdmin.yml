@@ -1,0 +1,14 @@
+adminOrder_index:
+    path:     /
+    defaults: { _controller: "EcommerceBundle:OrderAdmin:index" }
+    methods:  GET
+
+adminOrder_show:
+    path:     /{id}/show
+    defaults: { _controller: "EcommerceBundle:OrderAdmin:show" }
+    methods:  GET
+#
+#adminCategory_delete:
+#    path:     /{id}/delete
+#    defaults: { _controller: "EcommerceBundle:CategoryAdmin:delete" }
+#    methods:  DELETE

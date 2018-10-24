@@ -14,3 +14,7 @@ services:
     setNewReference:
       class: EcommerceBundle\Services\GetReference
       arguments:  ["@security.token_storage", "@doctrine.orm.entity_manager"]
+
+    setNewBill:
+      class: EcommerceBundle\Services\GetBill
+      arguments:  ["@service_container"]

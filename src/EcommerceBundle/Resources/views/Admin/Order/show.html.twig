@@ -1,0 +1,24 @@
+{% extends 'EcommerceBundle:Admin:layoutAdmin.html.twig' %}
+
+{% block body %}
+    <h1>Order</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ order.id }}</td>
+            </tr>
+            <tr>
+                <th>N°</th>
+                <td>{{ order.orderNumber }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('adminOrder_index') }}">Back to the list</a>
+        </li>
+    </ul>
+{% endblock %}
