@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use EcommerceBundle\Services\GetReference;
+use Symfony\Bundle\MonologBundle\SwiftMailer;
 
 class OrderController extends Controller
 {
@@ -128,6 +129,13 @@ class OrderController extends Controller
         $session->remove('address');   // Commande ok, on supprime la session
         $session->remove('basket');
         $session->remove('orders');
+
+//          Envoi d'email de confirmation de commande, modifier les parameters pour SwiftMailer (https://symfony.com/doc/3.4/email/gmail.html)
+//        $message = new \Swift_Message()->setSubject('Validation de votre commande')->setFrom('Ste')->setTo($orders->getUser()->getEmailCanonical())->setCharset('utf-8')->setContentType('text/html')->setBody($this->renderView('EcommerceBundle:Admin:email.html.twig',
+//        ['user' => $user]));
+//
+//        $this->get('mailer')->send($message);
+
 
         $this->get('session')->getFlashBag()->add('success', 'Votre commande est validée avec succès');
         return $this->redirect($this->generateUrl('bill'));
