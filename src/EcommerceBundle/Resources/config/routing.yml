@@ -21,3 +21,11 @@ routingCategoryAdmin:
 routingOrderAdmin:
     resource: '@EcommerceBundle/Resources/config/routing/routingOrderAdmin.yml'
     prefix: /admin/order
+
+routingUserAdmin:
+    resource: '@EcommerceBundle/Resources/config/routing/routingUserAdmin.yml'
+    prefix: /admin/user
+
+admin:
+    path:     /admin
+    defaults: { _controller: "EcommerceBundle:ProductAdmin:index" }

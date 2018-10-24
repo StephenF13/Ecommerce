@@ -1,0 +1,42 @@
+{% extends 'EcommerceBundle:Admin:layoutAdmin.html.twig' %}
+
+{% block body %}
+    <h1>User</h1>
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Name</th>
+            <th>Adresses</th>
+        </tr>
+        <tr>
+            <td>{{ user.username|capitalize }}</td>
+
+            <td>{% for address in user.address %}{{ address.name }} {{ address.firstname }}<br>
+                {{ address.address }} {{ address.postcode }} {{ address.city }} - {{ address.country }} {% endfor %}
+                <br><br></td>
+        </tr>
+        </tbody>
+    </table>
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>N° Commande</th>
+            <th>Montant</th>
+        </tr>
+        {% for order in user.orders %}
+        <tr>
+            <td><a href="{{ path('adminOrder_show', {'id' : order.id}) }}" title="afficher la facture">{{ order.orderNumber}}</a></td>
+            <td>{{ order.product.priceTTC }} €</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('adminUser_index') }}">Back to the list</a>
+        </li>
+
+    </ul>
+{% endblock %}

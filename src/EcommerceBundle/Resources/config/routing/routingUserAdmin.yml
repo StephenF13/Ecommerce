@@ -1,0 +1,9 @@
+adminUser_index:
+    path:     /
+    defaults: { _controller: "EcommerceBundle:UserAdmin:index" }
+    methods:  GET
+
+adminUser_show:
+    path:     /{id}/show
+    defaults: { _controller: "EcommerceBundle:UserAdmin:show" }
+    methods:  GET
