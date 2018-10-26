@@ -3,13 +3,16 @@
 namespace EcommerceBundle\Controller;
 
 use EcommerceBundle\Entity\Orders;
+use EcommerceBundle\Entity\VillesFranceFree;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use EcommerceBundle\Entity\User;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Request;
 use EcommerceBundle\Repository\OrdersRepository;
 use Spipu\Html2Pdf\Html2Pdf;
 use Symfony\Component\HttpFoundation\Response;
+
 
 class UserController extends Controller
 {
@@ -38,6 +41,28 @@ class UserController extends Controller
 
     }
 
+    public function cityAction($cp, Request $request)
+    {
+        if ($request->isXmlHttpRequest()) {
+
+            $em = $this->getDoctrine()->getManager();
+            $cityCp = $em->getRepository(VillesFranceFree::class)->findBy(['villeCodePostal' => $cp]);
+
+            if ($cityCp) {
+                $cities = [];
+                foreach ($cityCp as $city) {
+                    $cities[] = $city->getVilleNom();
+                }
+            } else {
+                $city = null;
+            }
+
+
+            return $this->json(['ville' => $cities]);
+        } else {
+            throw new \Exception('Erreur');
+        }
+    }
 
 
 }

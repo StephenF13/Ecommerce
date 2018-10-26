@@ -18,3 +18,7 @@ services:
     setNewBill:
       class: EcommerceBundle\Services\GetBill
       arguments:  ["@service_container"]
+
+    EcommerceBundle\Form\UserAddressType:
+        arguments: ['@doctrine.orm.entity_manager']
+        tags: [form.type]

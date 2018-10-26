@@ -29,3 +29,9 @@ routingUserAdmin:
 admin:
     path:     /admin
     defaults: { _controller: "EcommerceBundle:ProductAdmin:index" }
+
+city:
+    path:     /city/{cp}
+    defaults: { _controller: "EcommerceBundle:User:city" }
+    options:
+        expose: true
