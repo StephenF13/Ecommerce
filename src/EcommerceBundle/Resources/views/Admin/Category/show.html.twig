@@ -1,7 +1,7 @@
 {% extends 'EcommerceBundle:Admin:layoutAdmin.html.twig' %}
 
 {% block body %}
-    <h1>Category</h1>
+    <h1>Categorie</h1>
 
     <table>
         <tbody>
@@ -10,7 +10,7 @@
                 <td>{{ category.id }}</td>
             </tr>
             <tr>
-                <th>Name</th>
+                <th>Nom</th>
                 <td>{{ category.name }}</td>
             </tr>
         </tbody>
@@ -18,10 +18,10 @@
 
     <ul>
         <li>
-            <a href="{{ path('adminCategory_index') }}">Back to the list</a>
+            <a href="{{ path('adminCategory_index') }}">Retour à la liste</a>
         </li>
         <li>
-            <a href="{{ path('adminCategory_edit', { 'id': category.id }) }}">Edit</a>
+            <a href="{{ path('adminCategory_edit', { 'id': category.id }) }}">Editer</a>
         </li>
         <li>
             {{ form_start(delete_form) }}

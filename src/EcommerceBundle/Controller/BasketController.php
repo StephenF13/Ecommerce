@@ -73,7 +73,7 @@ class BasketController extends Controller
 
     public function deliveryAction(Request $request)
     {
-//        $entityManager = $this->getDoctrine()->getManager();
+
         $user = $this->get('security.token_storage')->getToken()->getUser();
         $userAddress = new UserAddress();
         $form = $this->createForm(UserAddressType::class, $userAddress);

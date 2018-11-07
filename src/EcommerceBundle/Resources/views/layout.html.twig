@@ -27,6 +27,9 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="brand" href="{{ path('ecommerce_homepage') }}">Ecommerce</a>
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('admin') }}" class="brand">  Administration</a>
+            {% endif %}
             <div class="nav-collapse collapse">
                 {{ render(controller('EcommerceBundle:Product:search')) }}
             </div>
@@ -48,19 +51,19 @@
 
             <div class="span4">
                 <h4>Notre entrepôt</h4>
-                <p><i class="icon-map-marker"></i>Grenoble</p>
+                <p><i class="icon-map-marker"></i> Grenoble</p>
             </div>
 
             <div class="span2">
                 <h4>Nous contacter</h4>
-                <p><i class="icon-phone"></i>&nbsp;Tel: {{ tel }}</p>
-                <p><i class="icon-print"></i>&nbsp;Fax: {{ fax  }}</p>
+                <p></i>&nbsp;Tel: {{ tel }}</p>
+                <p></i>&nbsp;Fax: {{ fax }}</p>
             </div>
         </div>
 
         <div class="row">
             <div class="span4">
-                <p>Exercice Symfony</p>
+                <p>Exercice démo Symfony</p>
             </div>
         </div>
     </div>

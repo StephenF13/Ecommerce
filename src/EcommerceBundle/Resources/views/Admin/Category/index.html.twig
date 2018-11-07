@@ -1,12 +1,12 @@
 {% extends 'EcommerceBundle:Admin:layoutAdmin.html.twig' %}
 
 {% block body %}
-    <h1>Categories list</h1>
+    <h1>Liste des catégories</h1>
 
     <table class="table table-striped table-hover">
         <thead>
             <tr>
-                <th>Name</th>
+                <th>Nom</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -29,7 +29,7 @@
 
     <ul>
         <li>
-            <a href="{{ path('adminCategory_new') }}">Create a new category</a>
+            <a href="{{ path('adminCategory_new') }}">Créer une nouvelle catégorie</a>
         </li>
     </ul>
 {% endblock %}

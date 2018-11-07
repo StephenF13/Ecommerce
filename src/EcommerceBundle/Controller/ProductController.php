@@ -78,15 +78,24 @@ class ProductController extends Controller
 
             if ($form->isSubmitted() && $form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
-                $products = $em->getRepository('EcommerceBundle:Product')->search($form['search']->getData());
+                $productsResult = $em->getRepository('EcommerceBundle:Product')->search($form['search']->getData());
+
+                $paginator = $this->get('knp_paginator');
+                $products = $paginator->paginate(
+                    $productsResult, /* query NOT result */
+                    $request->query->getInt('page', 1) /*page number*/,
+                    400/*limit per page*/
+                );
             } else {
                 throw $this->createNotFoundException('Le produit n\'existe pas.');
             }
 
+ //  Probleme en get page n'existe pas, pas de recherche avec pagination ( limit per page du paginator elevee pour eviter plusieurs pages
+//            et donc eviter passage en get  = pas de pagination avec la recherche )
             return $this->render('EcommerceBundle:Product:index.html.twig', ['products' => $products]);
-
         } else {
             throw $this->createNotFoundException('La page n\'existe pas.');
         }
+
     }
 }
